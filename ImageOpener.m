@@ -1,12 +1,16 @@
 % This script is for identifying the radii of holes in our ENGS 24 project
 % Ben Martin, Anoush Khan
 
+% TODO ===
 % Need to add user radius guessing
 % Need to store the radius
 % Need to scale the radius to a real length based on a calibration factor
 
+% clear environment (comment if not needed)
+clear, clc
+
 run = true;
-while run = true
+while run == true
     % execute code
     % prompt user to select JPG image
     [imgFileName,imgFilePath] = uigetfile('*.jpg');
@@ -21,9 +25,11 @@ while run = true
     
     % ask if user wants to continue
     inp = input('Do another image? y/n: ', 's');
-    if inp = 'y'
+    if inp == 'y'
         run = true;
-    elseif inp = 'n'
+    elseif inp == 'n'
+        run = false;
+    else
         run = false;
     end
 end
