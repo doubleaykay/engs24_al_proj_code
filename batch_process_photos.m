@@ -18,9 +18,10 @@ prev_sample_num = 0;
 prev_calib_mm_over_pix = 0;
 
 % instructions for use popup
-use_message = 'Left click to select initial point, right click to select final point. Watch figure titlebar for instructions (calibrate / measure)';
-f = msgbox(use_message);
+helpdlg('Left click to select initial point, right click to select final point. Watch figure titlebar for instructions (calibrate / measure)');
+
 tbl = table('Size', [1 5], 'VariableTypes', {'string' 'string' 'string' 'string' 'double'}, 'VariableNames', {'alloy' 'temp' 'sample' 'mark' 'diameter'});
+
 % begin processing loop
 for pic = picnames
     % get metadata from picture name
