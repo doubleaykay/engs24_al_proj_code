@@ -18,12 +18,15 @@ prev_sample_num = 0;
 prev_calib_mm_over_pix = 0;
 
 % instructions for use popup
+use_message = 'Left click to select initial point, right click to select final point. Watch figure titlebar for instructions (calibrate / measure)';
+f = msgbox(use_message);
 
 % begin processing loop
 for pic = picnames
     % get metadata from picture name
     name_parts = string(split(pic, ["_", "."]));
     % part 1 = AK, 2 = alloy, 3 = temp, 4 = sample num, 5 = mark num
+    initials = name_parts(1);
     alloy = name_parts(2);
     temp = name_parts(3);
     sample_num = name_parts(4);
