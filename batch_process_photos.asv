@@ -1,11 +1,11 @@
 % Batch Image Processing for ES24 ALuminum Project
-% Written by Anoush Khan, Ben Martin
+% Written by Anoush Khan
 
 % clear environment
 clear, clc
 
 % debugging flag: set to true to enter verbose mode
-DEBUG = false;
+DEBUG = true;
 
 % array of image names in user-selected folder
 picpath_raw = uigetdir;
@@ -20,7 +20,7 @@ prev_calib_mm_over_pix = 0;
 % instructions for use popup
 use_message = 'Left click to select initial point, right click to select final point. Watch figure titlebar for instructions (calibrate / measure)';
 f = msgbox(use_message);
-tbl = table('Size', [1 5], 'VariableTypes', {'string' 'string' 'string' 'string' 'double'}, 'VariableNames', {'alloy' 'temp' 'sample' 'mark' 'diameter'});
+tbl = table('Size', [1 5], 'VariableTypes', {'string' 'string' 'string' 'string' 'double'}, 'VariableNames', {';
 % begin processing loop
 for pic = picnames
     % get metadata from picture name
@@ -83,7 +83,7 @@ for pic = picnames
     data.(genvarname('sample')) = sample_num;
     data.(genvarname('mark')) = mark_num;
     data.(genvarname('diameter')) = diameter.mm;
-    % write the data to the table
+    %write the data to the table
     tbl = vertcat(tbl,struct2table(data));
     % set previous run parameters
     prev_sample_num = sample_num;
