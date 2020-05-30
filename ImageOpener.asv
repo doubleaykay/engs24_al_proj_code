@@ -23,7 +23,7 @@ img = imread(strcat(imgFilePath,imgFileName));
 imFig.UserData = img;
 h = refreshImg(img);
 %Get the calibration factor on startup
-calibrationFactor = getUserSpaCalib(h);
+calibrationFactor = getUserSpaCalib(getDistance(h));
 %Start a circle detection options window
 opFig = uifigure('Name', 'Detection Options', 'Position', [50 50 200 330]);
 %Add option sliders that the user can control
@@ -139,16 +139,18 @@ function h = refreshImg(img)
     h = imdistline;
 end
 
-function calibFact = getUserSpaCalib(line)
+function calibFact = getUserSpaCalib(lineDist)
     %Prompt the user to set the spatial calibration
+    title = 'Enter New Spatial Calibration Factor';
+    prompt = 'Enter a true distance i';
     definput = 200;
-    answer = input('Enter the real distance of the line in micrometers: ','s');
-    answer = str2double(answer);
+    answer = inputdlg(prompt,title,definput);
+    answer = str2double(cell2mat(answer));
     if isnan(answer)||answer<=0
         errordlg('Spatial calibration factor must be a positive number','Bad input detected');
         answer = definput;
     end
     %Returns a value in nm per pixel
-    calibFact = answer/getDistance(line);
+    calibFact = answer/lineDist;
     disp(calibFact);
 end
