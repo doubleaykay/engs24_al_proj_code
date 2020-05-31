@@ -20,7 +20,11 @@ prev_calib_mm_over_pix = 0;
 % instructions for use popup
 helpdlg('Left click to select initial point, right click to select final point. Watch figure titlebar for instructions (calibrate / measure)');
 
+% create table
 tbl = table('Size', [1 5], 'VariableTypes', {'string' 'string' 'string' 'string' 'double'}, 'VariableNames', {'alloy' 'temp' 'sample' 'mark' 'diameter'});
+
+% track number run for debug purposes
+i = 1;
 
 % begin processing loop
 for pic = picnames
@@ -59,10 +63,14 @@ for pic = picnames
     imshow(image);
     set(gcf, 'Position', get(0, 'Screensize'));
     
+    % set title of image popup
+    tit = strcat(string(pic), ', Image ', string(i), ' of ', string(length(picnames)));
+    set(gcf,'name',tit,'numbertitle','off')
+    
     % image processing is in two steps
     % first, get calibration factor for a 0.5 mm distance
     if ToCalib == true
-        set(gcf,'name','Mark off 0.5mm','numbertitle','off')
+        calib_text = text(0,0.5,'CALIBRATE: SELECT 0.5mm','Units','normalized', 'Color', 'r', 'FontSize',60);
         calibration.mm = 0.5;
         [~, ~, ~, xi,yi] = improfile(1000);
         calibration.pix = sqrt( (xi(2)-xi(1)).^2 + (yi(2)-yi(1)).^2);
@@ -73,7 +81,8 @@ for pic = picnames
     end
     
     % second, measure diameter
-    set(gcf,'name','Measure diameter of indent','numbertitle','off')
+    delete(calib_text);
+    meas_text = text(0,0.5,'Measure diameter','Units','normalized', 'Color', 'g', 'FontSize',60);
     [~, ~, ~, xi,yi] = improfile(1000);
     diameter.pix = sqrt( (xi(2)-xi(1)).^2 + (yi(2)-yi(1)).^2);
     diameter.mm = diameter.pix * calibration.mm_over_pix;
@@ -84,14 +93,23 @@ for pic = picnames
     data.(genvarname('sample')) = sample_num;
     data.(genvarname('mark')) = mark_num;
     data.(genvarname('diameter')) = diameter.mm;
+    
     % write the data to the table
     tbl = vertcat(tbl,struct2table(data));
+    
     % set previous run parameters
     prev_sample_num = sample_num;
     prev_calib_mm_over_pix = calibration.mm_over_pix;
     
+    % increment sample counter
+    i = i + 1;
+    
     % close image to loop to next one
+    delete(meas_text);
     close all
+    
+    % delete extra variables to fix a weird bug
+    clear image tit calib_text calibration xi xy meas_text diameter data
 end
 
 % write data to excel file
