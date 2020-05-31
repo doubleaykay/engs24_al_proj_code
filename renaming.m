@@ -5,7 +5,7 @@
 clear, clc;
 
 %set the debug flag
-debug = true;
+debug = false;
 
 %Set a flag for the running loop
 notDone = true;
