@@ -109,7 +109,7 @@ for pic = picnames
     close all
     
     % delete extra variables to fix a weird bug
-    clear image tit calib_text calibration xi xy meas_text diameter data
+    clear image tit calibration xi xy meas_text diameter data
 end
 
 % write data to excel file
