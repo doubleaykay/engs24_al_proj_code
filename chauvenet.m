@@ -1,4 +1,4 @@
-function [filtered, removed, devs] = chauvenet(raw_data)
+function [filtered, removed, devs,stdev] = chauvenet(raw_data)
     % pull stats from data
     avg = mean(raw_data);
     stdev = std(raw_data);
