@@ -1,5 +1,5 @@
 # ENGS 24 Aluminum Aging Project: Image and Statistical Processing Code
-Written by Anoush Khan and Ben Martin.
+Written by Anoush Khan '21 and Ben Martin '22.
 
 Primarily in Matlab; some components inspired by Python code.
 
